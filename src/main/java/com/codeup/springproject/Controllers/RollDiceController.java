@@ -15,11 +15,17 @@ public String showNumbers() {
     return "diceRoll";
 }
 
-//@PostMapping("/roll-dice/${number}")
-//    public String rollDice(@RequestParam int number, Model model) {
-//    model.addAttribute("number", number);
-//    return "diceRoll";
-//
-//}
+@GetMapping("/roll-dice/{n}")
+    public String rollDice(@PathVariable String n, Model model) {
+    model.addAttribute("n", n);
+    return "diceRoll";
+}
+
+@PostMapping("/roll-dice/{n}")
+    public String randomNumber(@PathVariable String n, Model model) {
+    int randomNumber = (int) Math.floor(Math.random() * 7);
+    model.addAttribute("randomNumber", randomNumber);
+    return "diceRoll";
+}
 
 }

@@ -5,7 +5,7 @@
     <title>Dice Roll</title>
 </head>
 <body>
-<form action="" method="post">
+<form action="/roll-dice/{n}" method="get" name="number">
     <h2>Guess the dice roll number!</h2>
     <a href="/roll-dice/1">Roll a One!</a>
     <br>
@@ -20,7 +20,7 @@
     <a href="/roll-dice/6">Roll a Six!</a>
 </form>
 
-<!--<h2>Here is the number you picked: <span th:text="${number}">Number</span></h2>-->
-<!--<h2>Here is the dice roll number: <span th:text="${randomNumber}">Number</span></h2>-->
+<h2>Here is the number you picked: <span th:text="${n}">Number</span></h2>
+<h2>Here is the dice roll number: <span th:text="${randomNumber}">Number</span></h2>
 </body>
 </html>
