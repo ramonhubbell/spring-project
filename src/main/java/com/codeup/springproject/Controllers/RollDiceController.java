@@ -18,13 +18,11 @@ public String showNumbers() {
 @GetMapping("/roll-dice/{n}")
     public String rollDice(@PathVariable String n, Model model) {
     model.addAttribute("n", n);
-    return "diceRoll";
-}
-
-@PostMapping("/roll-dice/{n}")
-    public String randomNumber(@PathVariable String n, Model model) {
-    int randomNumber = (int) Math.floor(Math.random() * 7);
+    int randomNumber = (int) Math.floor(Math.random() * 6) + 1;
+    boolean isNumberPresent = n != null;
     model.addAttribute("randomNumber", randomNumber);
+    model.addAttribute("numbersEqual", Integer.parseInt(n) == (randomNumber));
+    model.addAttribute("numberPresent", isNumberPresent);
     return "diceRoll";
 }
 

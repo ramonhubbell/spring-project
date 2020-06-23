@@ -22,5 +22,11 @@
 
 <h2>Here is the number you picked: <span th:text="${n}">Number</span></h2>
 <h2>Here is the dice roll number: <span th:text="${randomNumber}">Number</span></h2>
+<div th:if="${numberPresent}">
+    <div th:switch="${numbersEqual}">
+        <p th:case="${true}">You guessed the correct number!</p>
+        <p th:case="*">You guessed the wrong number!</p>
+    </div>
+</div>
 </body>
 </html>
