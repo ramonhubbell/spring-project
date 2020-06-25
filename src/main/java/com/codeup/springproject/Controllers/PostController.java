@@ -26,12 +26,13 @@ public class PostController {
 
     @GetMapping("/posts/{id}")
     public String postId(@PathVariable long id, Model model) {
-        Post testPost = new Post("new Title","New body.");
+//        Post testPost = new Post("new Title","New body.");
 //        Post testPost = null;
-        boolean postPresent = testPost != null;
+        Post post = postsDao.getOne(id);
+        boolean postPresent = post != null;
         model.addAttribute("postPresent", postPresent);
         model.addAttribute("postId", id);
-        model.addAttribute("post", testPost);
+        model.addAttribute("post", post);
         System.out.println(id + " this should be the id.");
 //        System.out.println(testPost.getTitle());
         return "posts/show";
@@ -61,7 +62,6 @@ public class PostController {
     }
 
     @PostMapping("/posts/{id}/edit")
-    @ResponseBody
     public String update(@PathVariable long id,
                          @RequestParam(name = "title") String title,
                          @RequestParam(name = "body") String body){
@@ -73,7 +73,7 @@ public class PostController {
 //    Save the changes
     postsDao.save(foundPost);
         System.out.println(foundPost.getTitle());
-    return "Post updated";
+    return "redirect:/posts/" + foundPost.getId();
     }
 
     @DeleteMapping("/posts/{id}/delete")
