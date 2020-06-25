@@ -32,7 +32,7 @@ public class PostController {
         model.addAttribute("postPresent", postPresent);
         model.addAttribute("postId", id);
         model.addAttribute("post", testPost);
-        System.out.println(id + "this should be the id.");
+        System.out.println(id + " this should be the id.");
 //        System.out.println(testPost.getTitle());
         return "posts/show";
     }
@@ -43,11 +43,44 @@ public class PostController {
         return "View the form for creating a post.";
     }
 
-//    @RequestMapping(path = "/posts/create", method = RequestMethod.POST)
     @PostMapping("/posts/create")
     @ResponseBody
     public String createPost() {
+        Post newPost = new Post("Newer Title", "newer blog.");
+        postsDao.save(newPost);
+        System.out.println(newPost.getTitle());
         return "Create a new post.";
+    }
+
+    @GetMapping("/posts/{id}/edit")
+    public String showEditForm(@PathVariable long id, Model model){
+//        Find the post
+        Post postToEdit = postsDao.getOne(id);
+        model.addAttribute("post", postToEdit);
+        return "posts/edit";
+    }
+
+    @PostMapping("/posts/{id}/edit")
+    @ResponseBody
+    public String update(@PathVariable long id,
+                         @RequestParam(name = "title") String title,
+                         @RequestParam(name = "body") String body){
+//    find a post
+    Post foundPost = postsDao.getOne(id);
+//    edit the post
+    foundPost.setTitle(title);
+    foundPost.setBody(body);
+//    Save the changes
+    postsDao.save(foundPost);
+        System.out.println(foundPost.getTitle());
+    return "Post updated";
+    }
+
+    @DeleteMapping("/posts/{id}/delete")
+    @ResponseBody
+    public String destroy(@PathVariable long id){
+        postsDao.deleteById(id);
+        return "post deleted";
     }
 
 }
