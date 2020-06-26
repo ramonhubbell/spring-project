@@ -35,7 +35,7 @@ public class PostController {
         model.addAttribute("post", post);
         System.out.println(id + " this should be the id.");
 //        System.out.println(testPost.getTitle());
-        return "posts/show";
+        return "/posts/show";
     }
 
     @GetMapping("/posts/create")
@@ -45,12 +45,11 @@ public class PostController {
     }
 
     @PostMapping("/posts/create")
-    @ResponseBody
     public String createPost() {
         Post newPost = new Post("Newer Title", "newer blog.");
         postsDao.save(newPost);
         System.out.println(newPost.getTitle());
-        return "Create a new post.";
+        return "redirect:/posts/" + newPost.getId();
     }
 
     @GetMapping("/posts/{id}/edit")
@@ -76,11 +75,10 @@ public class PostController {
     return "redirect:/posts/" + foundPost.getId();
     }
 
-    @DeleteMapping("/posts/{id}/delete")
-    @ResponseBody
+    @PostMapping("/posts/{id}/delete")
     public String destroy(@PathVariable long id){
         postsDao.deleteById(id);
-        return "post deleted";
+        return "redirect:/posts";
     }
 
 }
