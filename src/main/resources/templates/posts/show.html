@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('View Post')">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav th:replace="fragments/navbar :: navbar"></nav>
+    <div class="container">
+        <div th:if="${!postPresent}">
+            Post Not found!
+        </div>
+        <div th:if="${postPresent}">
+            <div th:text="${postId}">ID</div>
+            <h3 th:text="${post.title}">Title</h3>
+            <div th:text="${post.body}">Body</div>
+        </div>
+    </div>
+    <footer th:replace ="fragments/footer :: footer">
+    </footer>
+</body>
+</html>
