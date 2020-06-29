@@ -16,19 +16,24 @@ public class Post {
     @Column(nullable = false)
     private String body;
 
+    @OneToOne
+    private User user;
+
     public Post(){};
 
 //    insert
-    public Post (String title, String body){
+    public Post (String title, String body, User user){
         this.title = title;
         this.body = body;
+        this.user = user;
     }
 
 //    read
-    public Post(Long id, String title, String body){
+    public Post(Long id, String title, String body, User user){
         this.id = id;
         this.title = title;
         this.body = body;
+        this.user = user;
     }
 
     public String getTitle(){
@@ -53,5 +58,13 @@ public class Post {
 
     public void setId(Long id){
         this.id = id;
+    }
+
+    public User getUser(){
+        return this.user;
+    }
+
+    public void setUser(User user){
+        this.user = user;
     }
 }
