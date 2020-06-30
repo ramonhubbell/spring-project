@@ -35,22 +35,21 @@ public class PostController {
         model.addAttribute("postPresent", postPresent);
         model.addAttribute("postId", id);
         model.addAttribute("post", post);
-        System.out.println(id + " this should be the id.");
         return "/posts/show";
     }
 
     @GetMapping("/posts/create")
-    @ResponseBody
-    public String viewPost(){
-        return "View the form for creating a post.";
+    public String viewPost(Model viewModel){
+        viewModel.addAttribute("post", new Post());
+        return "posts/create";
     }
 
     @PostMapping("/posts/create")
-    public String createPost() {
+    public String createPost(@ModelAttribute Post postToBeSaved) {
         User currentUser = usersDao.getOne(1L);
-        Post newPost = new Post("Newer Title", "newer blog.", null);
-        postsDao.save(newPost);
-        return "redirect:/posts/" + newPost.getId();
+        postToBeSaved.setUser(currentUser);
+        Post savedPost = postsDao.save(postToBeSaved);
+        return "redirect:/posts/" + savedPost.getId();
     }
 
     @GetMapping("/posts/{id}/edit")
@@ -62,18 +61,12 @@ public class PostController {
     }
 
     @PostMapping("/posts/{id}/edit")
-    public String update(@PathVariable long id,
-                         @RequestParam(name = "title") String title,
-                         @RequestParam(name = "body") String body){
-//    find a post
-    Post foundPost = postsDao.getOne(id);
-//    edit the post
-    foundPost.setTitle(title);
-    foundPost.setBody(body);
+    public String update(@ModelAttribute Post postToEdit){
 //    Save the changes
-    postsDao.save(foundPost);
-        System.out.println(foundPost.getTitle());
-    return "redirect:/posts/" + foundPost.getId();
+        User currentUser = usersDao.getOne(1L);
+        postToEdit.setUser(currentUser);
+        postsDao.save(postToEdit);
+    return "redirect:/posts/" + postToEdit.getId();
     }
 
     @PostMapping("/posts/{id}/delete")
