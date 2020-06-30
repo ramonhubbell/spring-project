@@ -1,7 +1,9 @@
 package com.codeup.springproject.Controllers;
 
+import com.codeup.springproject.daos.UsersRepository;
 import com.codeup.springproject.models.Post;
 import com.codeup.springproject.daos.PostsRepository;
+import com.codeup.springproject.models.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,8 +14,10 @@ import java.util.List;
 public class PostController {
 
     private PostsRepository postsDao;
-    public PostController(PostsRepository postsRepository) {
+    private UsersRepository usersDao;
+    public PostController(PostsRepository postsRepository, UsersRepository usersRepository) {
         postsDao = postsRepository;
+        usersDao = usersRepository;
     }
 
     @GetMapping ("/posts")
@@ -26,15 +30,12 @@ public class PostController {
 
     @GetMapping("/posts/{id}")
     public String postId(@PathVariable long id, Model model) {
-//        Post testPost = new Post("new Title","New body.");
-//        Post testPost = null;
         Post post = postsDao.getOne(id);
         boolean postPresent = post != null;
         model.addAttribute("postPresent", postPresent);
         model.addAttribute("postId", id);
         model.addAttribute("post", post);
         System.out.println(id + " this should be the id.");
-//        System.out.println(testPost.getTitle());
         return "/posts/show";
     }
 
@@ -46,9 +47,9 @@ public class PostController {
 
     @PostMapping("/posts/create")
     public String createPost() {
-        Post newPost = new Post("Newer Title", "newer blog.");
+        User currentUser = usersDao.getOne(1L);
+        Post newPost = new Post("Newer Title", "newer blog.", null);
         postsDao.save(newPost);
-        System.out.println(newPost.getTitle());
         return "redirect:/posts/" + newPost.getId();
     }
 

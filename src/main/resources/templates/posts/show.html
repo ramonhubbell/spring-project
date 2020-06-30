@@ -14,6 +14,8 @@
             <div th:text="${postId}">ID</div>
             <h3 th:text="${post.title}">Title</h3>
             <div th:text="${post.body}">Body</div>
+            <div>Created by: <span th:text="${post.user.username}"></span></div>
+            <div>Email : <span th:text="${post.user.email}"></span></div>
         </div>
     </div>
     <footer th:replace ="fragments/footer :: footer">
