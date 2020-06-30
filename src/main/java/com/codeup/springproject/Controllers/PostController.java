@@ -35,7 +35,6 @@ public class PostController {
         model.addAttribute("postPresent", postPresent);
         model.addAttribute("postId", id);
         model.addAttribute("post", post);
-        System.out.println(id + " this should be the id.");
         return "/posts/show";
     }
 
