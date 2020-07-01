@@ -7,6 +7,7 @@ import com.codeup.springproject.models.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import com.codeup.springproject.services.EmailService;
 
 import java.util.List;
 
@@ -15,9 +16,12 @@ public class PostController {
 
     private PostsRepository postsDao;
     private UsersRepository usersDao;
-    public PostController(PostsRepository postsRepository, UsersRepository usersRepository) {
-        postsDao = postsRepository;
-        usersDao = usersRepository;
+    private final EmailService emailService;
+
+    public PostController(PostsRepository postsRepository, UsersRepository usersRepository, EmailService emailService) {
+        this.postsDao = postsRepository;
+        this.usersDao = usersRepository;
+        this.emailService = emailService;
     }
 
     @GetMapping ("/posts")
@@ -49,6 +53,7 @@ public class PostController {
         User currentUser = usersDao.getOne(1L);
         postToBeSaved.setUser(currentUser);
         Post savedPost = postsDao.save(postToBeSaved);
+        emailService.prepareAndSend(savedPost, "A new post has been created.", "A post has been created with post id " + savedPost.getId());
         return "redirect:/posts/" + savedPost.getId();
     }
 
