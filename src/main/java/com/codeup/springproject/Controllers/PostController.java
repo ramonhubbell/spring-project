@@ -40,7 +40,7 @@ public class PostController {
         model.addAttribute("postPresent", postPresent);
         model.addAttribute("postId", id);
         model.addAttribute("post", post);
-        return "/posts/show";
+        return "posts/show";
     }
 
     @GetMapping("/posts/create")
