@@ -1,5 +1,6 @@
 package com.codeup.springproject;
 
+import com.codeup.springproject.models.Combination;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -34,8 +35,6 @@ public class App {
             } else { combinationAndCount.put(combinations.get(i).getToppings(), ++count);
             }
         }
-
-        System.out.println("combinationAndCount: " + combinationAndCount);
 
         LinkedHashMap<List<String>, Integer> reverseSortedMap = new LinkedHashMap<>();
         combinationAndCount.entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).limit(20)

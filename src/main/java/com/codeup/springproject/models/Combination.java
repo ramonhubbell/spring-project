@@ -1,4 +1,4 @@
-package com.codeup.springproject;
+package com.codeup.springproject.models;
 
 import java.util.List;
 
