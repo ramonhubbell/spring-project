@@ -43,6 +43,7 @@ public class PizzaCombinationController {
         combinationAndCount.entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).limit(20)
                 .forEachOrdered(x -> reverseSortedMap.put(x.getKey(), x.getValue()));
         model.addAttribute("combinations", reverseSortedMap);
+//        var rank = model.addAttribute("rank", reverseSortedMap.indexOf());
         return "combinations";
     }
 }
