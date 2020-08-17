@@ -26,8 +26,8 @@ public class PizzaCombinationController {
                 .uri(URI.create("https://www.olo.com/pizzas.json"))
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-//        System.out.println(response.body());
 
+//        Parse JSON
         ObjectMapper mapper = new ObjectMapper();
         List<Combination> combinations = mapper.readValue(response.body(), new TypeReference<List<Combination>>() {});
         Map<List<String>, Integer> combinationAndCount = new HashMap<>();
