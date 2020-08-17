@@ -7,30 +7,32 @@
 <body>
 <nav th:replace="fragments/navbar :: navbar"></nav>
 <div class="container">
-    <h1>Here are the top 20 pizza combinations!</h1>
-    <table th:each="combination, state : ${combinations}">
+    <h1>Here Are The Top 20 Pizza Combinations!</h1>
+    <br>
+    <table border="2" class="text-center">
         <tr>
-            <td class="col-md -6">
-                <h2 th:text="${state.count}">Rankings</h2>
-            </td>
-            <td class="col-md -6">
-                <h2 th:text="${combination.getKey()}">Toppings</h2>
-            </td>
-            <br>
+            <th>
+                <h2>Ranking</h2>
+            </th>
+            <th>
+                <h2 class="text-center">Pizza Toppings</h2>
+            </th>
+            <th>
+                <h3>Number of Times Ordered</h3>
+            </th>
+        </tr>
+        <tr th:each="combination, state : ${combinations}">
             <td>
-                <h2 th:text="${combination.getValue()}">Frequency</h2>
+                <h3 th:text="${state.count}">Rankings</h3>
+            </td>
+            <td>
+                <h3 th:text="${'' + combination.getKey() + ''}">Toppings</h3>
+            </td>
+            <td>
+                <h3 th:text="${combination.getValue()}">Frequency</h3>
             </td>
         </tr>
     </table>
-<!--    <table id="products" border="1">-->
-<!--        <thead>-->
-<!--        <tr>-->
-<!--            <th>Ranking</th>-->
-<!--            <th>Toppings and Frequency</th>-->
-<!--        </tr>-->
-<!--        </thead>-->
-<!--        <tbody id="insertToppings"></tbody>-->
-<!--    </table>-->
 </div>
 <footer th:replace ="fragments/footer :: footer">
 </footer>

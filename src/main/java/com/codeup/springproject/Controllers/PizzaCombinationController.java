@@ -32,7 +32,6 @@ public class PizzaCombinationController {
         List<Combination> combinations = mapper.readValue(response.body(), new TypeReference<List<Combination>>() {});
         Map<List<String>, Integer> combinationAndCount = new HashMap<>();
         for (int i = 0; i < combinations.size(); i += 1) {
-//            System.out.println(combinations.get(i).getToppings());
             Integer count = combinationAndCount.get(combinations.get(i).getToppings());
             if (count == null) {
                 combinationAndCount.put(combinations.get(i).getToppings(), 1);
@@ -43,7 +42,6 @@ public class PizzaCombinationController {
         combinationAndCount.entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).limit(20)
                 .forEachOrdered(x -> reverseSortedMap.put(x.getKey(), x.getValue()));
         model.addAttribute("combinations", reverseSortedMap);
-//        var rank = model.addAttribute("rank", reverseSortedMap.indexOf());
         return "combinations";
     }
 }

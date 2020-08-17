@@ -14,10 +14,4 @@ public class Combination {
         this.toppings = toppings;
     }
 
-//    @Override
-//    public String toString() {
-//        return "Combination {" +
-//                " toppings ='" + toppings + '\'' +
-//                '}';
-//    }
 }

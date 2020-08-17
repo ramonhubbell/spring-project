@@ -23,11 +23,16 @@ public class App {
                 .uri(URI.create(POSTS_API_URL))
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
+//        System.out.println(response.body());
         ObjectMapper mapper = new ObjectMapper();
         List<Combination> combinations = mapper.readValue(response.body(), new TypeReference<List<Combination>>() {});
+
+
         Map<List<String>, Integer> combinationAndCount = new HashMap<>();
         for (int i = 0; i < combinations.size(); i += 1) {
+            String stringCombinations  = combinations.get(i).getToppings().toString();
+            stringCombinations = stringCombinations.substring(1, stringCombinations.length() -1);
+            System.out.println(stringCombinations);
 //            System.out.println(combinations.get(i).getToppings());
             Integer count = combinationAndCount.get(combinations.get(i).getToppings());
             if (count == null) {
@@ -35,13 +40,13 @@ public class App {
             } else { combinationAndCount.put(combinations.get(i).getToppings(), ++count);
             }
         }
-
+        System.out.println(combinationAndCount);
         LinkedHashMap<List<String>, Integer> reverseSortedMap = new LinkedHashMap<>();
         combinationAndCount.entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).limit(20)
                 .forEachOrdered(x -> reverseSortedMap.put(x.getKey(), x.getValue()));
-
-        System.out.printf("Reverse Sorted Map: %s \n", reverseSortedMap);
-
+        System.out.println(reverseSortedMap);
+//        String stringReverseSortedMap = reverseSortedMap.toString();
+//        System.out.println(stringReverseSortedMap.substring(1, stringReverseSortedMap.length() -1));
     }
 }
 
