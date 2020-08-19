@@ -71,10 +71,21 @@ public class App {
 //        System.out.println(listKeys.indexOf(0));
         int i = 0;
         for (Map.Entry<List<String>, Integer> toppings : sortByValue(combinationAndCount).entrySet()) {
-            System.out.println(toppings.getKey().toString().substring(1, )  + " is #" + (i + 1)
-                    + ", with " + toppings.getValue() + " orders.");
+            if ( i < 20) {
+                System.out.println(toppings.getKey().toString().substring(1, toppings.getKey().toString().length() - 1)  + " is #" + (i + 1)
+                        + ", with " + toppings.getValue() + " orders.");
+            }
             i++;
         }
+
+//        int j = 0;
+//        for (Map.Entry<List<String>, Integer> toppings : sortByValue(combinationAndCount).entrySet()) {
+//            if ( j < 20) {
+//                System.out.println(toppings.getKey()  + " is #" + (j + 1)
+//                        + ", with " + toppings.getValue() + " orders.");
+//            }
+//            j++;
+//        }
 //        for (int i = 0 ; i < sortByValue(combinationAndCount).size(); i += 1){
 //            System.out.println("Rank: " + (i + 1) + " Toppings: " + sortByValue(combinationAndCount).keySet());
 //        }
