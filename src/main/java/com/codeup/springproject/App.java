@@ -1,6 +1,5 @@
 package com.codeup.springproject;
 
-import com.codeup.springproject.models.Combination;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -13,11 +12,25 @@ import java.util.*;
 
 public class App {
 
+    public static class Combination {
+
+        private List<String> toppings;
+
+        public List<String> getToppings() {
+            return toppings;
+        }
+
+        public void setToppings(List<String> toppings) {
+            this.toppings = toppings;
+        }
+
+    }
+
     // function to sort hashmap by values
-    public static HashMap<List<String>, Integer> sortByValue(HashMap<List<String>, Integer> hm)
+    public static HashMap<List<String>, Integer> sortByValue(HashMap<List<String>, Integer> hashMap)
     {
         // Create a list from elements of HashMap
-        List<Map.Entry<List<String>, Integer> > list = new LinkedList<Map.Entry<List<String>, Integer> >(hm.entrySet());
+        List<Map.Entry<List<String>, Integer> > list = new LinkedList<Map.Entry<List<String>, Integer> >(hashMap.entrySet());
 
         // Sort the list
         Collections.sort(list, new Comparator<Map.Entry<List<String>, Integer>>() {
@@ -29,11 +42,11 @@ public class App {
         });
 
         // put data from sorted list to hashmap
-        HashMap<List<String>, Integer> temp = new LinkedHashMap<List<String>, Integer>();
-        for (Map.Entry<List<String>, Integer> aa : list) {
-            temp.put(aa.getKey(), aa.getValue());
+        HashMap<List<String>, Integer> sortedMap = new LinkedHashMap<List<String>, Integer>();
+        for (Map.Entry<List<String>, Integer> item : list) {
+            sortedMap.put(item.getKey(), item.getValue());
         }
-        return temp;
+        return sortedMap;
     }
 
     public static final String POSTS_API_URL = "https://www.olo.com/pizzas.json";
@@ -46,10 +59,10 @@ public class App {
                 .uri(URI.create(POSTS_API_URL))
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-//        System.out.println(response.body());
+
+//        Parsed JSON.
         ObjectMapper mapper = new ObjectMapper();
         List<Combination> combinations = mapper.readValue(response.body(), new TypeReference<List<Combination>>() {});
-
 
         HashMap<List<String>, Integer> combinationAndCount = new HashMap<>();
         for (int i = 0; i < combinations.size(); i += 1) {
@@ -59,16 +72,7 @@ public class App {
             } else { combinationAndCount.put(combinations.get(i).getToppings(), ++count);
             }
         }
-//        System.out.println(combinationAndCount);
-//        System.out.println(sortByValue(combinationAndCount));
 
-//        for ( int i = 0; i < 20; i +=1 ){
-//            System.out.println(sortByValue(combinationAndCount).entrySet() + "rank: " + i);
-//        }
-//        LinkedHashMap<List<String>, Integer> reverseSortedMap = new LinkedHashMap<>();
-//        Set<List<String>> keys = reverseSortedMap.keySet();
-//        List<List<String>> listKeys = new LinkedList<List<String>>(keys);
-//        System.out.println(listKeys.indexOf(0));
         int i = 0;
         for (Map.Entry<List<String>, Integer> toppings : sortByValue(combinationAndCount).entrySet()) {
             if ( i < 20) {
@@ -77,31 +81,6 @@ public class App {
             }
             i++;
         }
-
-//        int j = 0;
-//        for (Map.Entry<List<String>, Integer> toppings : sortByValue(combinationAndCount).entrySet()) {
-//            if ( j < 20) {
-//                System.out.println(toppings.getKey()  + " is #" + (j + 1)
-//                        + ", with " + toppings.getValue() + " orders.");
-//            }
-//            j++;
-//        }
-//        for (int i = 0 ; i < sortByValue(combinationAndCount).size(); i += 1){
-//            System.out.println("Rank: " + (i + 1) + " Toppings: " + sortByValue(combinationAndCount).keySet());
-//        }
-//        LinkedHashMap<List<String>, Integer> reverseSortedMap = new LinkedHashMap<>();
-//        combinationAndCount.entrySet()
-//                            .stream()
-//                            .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-//                            .limit(20)
-//                            .forEachOrdered(x -> reverseSortedMap.put(x.getKey(), x.getValue()));
-//        for(int i =0; i < reverseSortedMap.size(); i += 1){
-//            System.out.println("Rank: " + (i + 1) + "  Topping Combinations: " + reverseSortedMap.values());
-
-//        }
-//        System.out.println(reverseSortedMap);
-//        String stringReverseSortedMap = reverseSortedMap.toString();
-//        System.out.println(stringReverseSortedMap.substring(1, stringReverseSortedMap.length() -1));
     }
 }
 
