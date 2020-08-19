@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('All Pizza Combinations')">
+    <meta charset="UTF-8">
+    <title>All Pizza Combinations</title>
+</head>
+<body>
+<div class="container">
+    <h1>Here Are The Top 20 Pizza Combinations!</h1>
+    <br>
+    <table border="2" class="text-center">
+        <tr>
+            <th>
+                <h2>Ranking</h2>
+            </th>
+            <th>
+                <h2 class="text-center">Pizza Toppings</h2>
+            </th>
+            <th>
+                <h3>Number of Times Ordered</h3>
+            </th>
+        </tr>
+        <tr th:each="combination, state : ${combinations}">
+            <td>
+                <h3 th:text="${state.count}">Rankings</h3>
+            </td>
+            <td>
+                <h3 th:text="${'' + combination.getKey() + ''}">Toppings</h3>
+            </td>
+            <td>
+                <h3 th:text="${combination.getValue()}">Frequency</h3>
+            </td>
+        </tr>
+    </table>
+</div>
+<footer th:replace ="fragments/footer :: footer">
+</footer>
+</body>
+</html>
